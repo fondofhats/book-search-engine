@@ -35,8 +35,8 @@ npm install
 * Node.js
 * Express.js
 * MongoDB and Mongoose
-* JSON Web Tokenk
-* JavaScript ES5 and ES6
+* JSON Web Token
+* JavaScript
 * HTML and CSS
 * Heroku
 
