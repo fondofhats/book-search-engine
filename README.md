@@ -8,8 +8,9 @@
 
 ## Description
 
-  refactor  functioning Google Books API search engine built with a RESTful API to be a GraphQL API built with Apollo Server.
-  The app was built using the MERN stack, with a React front end, MongoDB database, and Node.js/Express.js server and API. Users are able to search, buy from google (if book is available), create an account and save and remove favorite books from a list.  
+  Refactoring a functioning Google Books API search engine built with a RESTful API to be a GraphQL API built with Apollo Server.
+  The app was built using the MERN stack, with a React front end, MongoDB database, and Node.js/Express.js server and API. Users are able to search, buy from
+  google (if book is available), create an account and save and remove favorite books from a list.  
 
 ## Table of Contents
 
