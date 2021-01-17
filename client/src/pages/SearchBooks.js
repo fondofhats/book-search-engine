@@ -1,13 +1,20 @@
+import React, { useState, useEffect } from "react";
+import {
+  Jumbotron,
+  Container,
+  Col,
+  Form,
+  Button,
+  Card,
+  CardColumns,
+} from "react-bootstrap";
 
-import React, { useState, useEffect } from 'react';
-import { Jumbotron, Container, Col, Form, Button, Card, CardColumns } from 'react-bootstrap';
-
-import Auth from '../utils/auth';
-import { searchGoogleBooks } from '../utils/API';
-import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
-import { useMutation } from '@apollo/react-hooks';
-import { GET_ME } from '../utils/queries';
-import {SAVE_BOOK} from '../utils/mutations';
+import Auth from "../utils/auth";
+import { searchGoogleBooks } from "../utils/API";
+import { saveBookIds, getSavedBookIds } from "../utils/localStorage";
+import { useMutation } from "@apollo/react-hooks";
+import { SAVE_BOOK } from "../utils/mutations";
+import { GET_ME } from "../utils/queries";
 
 const SearchBooks = () => {
   // create state for holding returned google api data
@@ -49,6 +56,8 @@ const SearchBooks = () => {
         authors: book.volumeInfo.authors || ["No author to display"],
         title: book.volumeInfo.title,
         description: book.volumeInfo.description,
+        forSale: book.saleInfo.saleability,
+        link: book.saleInfo.buyLink,
         image: book.volumeInfo.imageLinks?.thumbnail || "",
       }));
 
@@ -57,6 +66,13 @@ const SearchBooks = () => {
     } catch (err) {
       console.error(err);
     }
+  };
+
+  const getBookAvailable = (book) => {
+    if (book.forSale === "NOT_FOR_SALE") {
+      return false;
+    }
+    return true;
   };
 
   // create function to handle saving a book to our database
@@ -73,13 +89,18 @@ const SearchBooks = () => {
 
     try {
       await saveBook({
-        variables: {book: bookToSave},
-        update: cache => {
-          const {me} = cache.readQuery({ query: GET_ME });
-          console.log(me.savedBooks)
-          cache.writeQuery({ query: GET_ME , data: {me: { ...me, savedBooks: [...me.savedBooks, bookToSave] } } })
-        }
+        variables: { book: bookToSave },
+        update: (cache) => {
+          const { me } = cache.readQuery({ query: GET_ME });
+          // console.log(me)
+          // console.log(me.savedBooks)
+          cache.writeQuery({
+            query: GET_ME,
+            data: { me: { ...me, savedBooks: [...me.savedBooks, bookToSave] } },
+          });
+        },
       });
+
       // if book successfully saves to user's account, save book id to state
       setSavedBookIds([...savedBookIds, bookToSave.bookId]);
     } catch (err) {
@@ -150,6 +171,20 @@ const SearchBooks = () => {
                         : "Save this Book!"}
                     </Button>
                   )}
+                  <Button
+                    disabled={!getBookAvailable(book)}
+                    className={
+                      getBookAvailable(book)
+                        ? "btn-block btn-success"
+                        : "btn-block btn-danger"
+                    }
+                    href={book.link}
+                    target="_blank"
+                  >
+                    {getBookAvailable(book)
+                      ? "Buy on Google Play"
+                      : "This book is not for sale"}
+                  </Button>
                 </Card.Body>
               </Card>
             );

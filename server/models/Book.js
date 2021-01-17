@@ -19,6 +19,9 @@ const bookSchema = new Schema({
   image: {
     type: String,
   },
+  forSale: {
+    type: String,
+  },
   link: {
     type: String,
   },

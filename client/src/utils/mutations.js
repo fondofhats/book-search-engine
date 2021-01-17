@@ -35,6 +35,7 @@ export const SAVE_BOOK = gql`
         description
         bookId
         image
+        forSale
         link
         title
       }
@@ -53,6 +54,7 @@ export const REMOVE_BOOK = gql`
         description
         bookId
         image
+        forSale
         link
         title
       }
