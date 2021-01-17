@@ -8,7 +8,8 @@
 
 ## Description
 
-  Updating an existing budget tracker application to allow for offline access and functionality. The user will be able to add expenses and deposits to their budget with or without a connection. If the user enters transactions offline, the total should be updated when they're brought back online.
+  refactor  functioning Google Books API search engine built with a RESTful API to be a GraphQL API built with Apollo Server.
+  The app was built using the MERN stack, with a React front end, MongoDB database, and Node.js/Express.js server and API. Users are able to search, buy from google (if book is available), create an account and save and remove favorite books from a list.  
 
 ## Table of Contents
 
